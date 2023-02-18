@@ -2,13 +2,17 @@ export type CadastroRequisicao = {
     nome: string,
     email: string,
     senha: string
-    avatar: String,
-    telefone:Number,
+    //avatar: String,
     cep: Number,
-    endereço: String,
-    num_endereço: String,
-    complemento_endereço: String,
+    endereco: String,
+    num_endereco: String,
+    
+    //validar como deixar complemento opcional
+    //complemento_endereco: String,
     bairro: String,
     cidade: String,
-    estado: String
+    estado: String,
+    cpf: Number,
+    data_nasc: String,
+    celular: Number
 };
