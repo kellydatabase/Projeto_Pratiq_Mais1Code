@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import type {respostaPadraoMsg} from '../../types/RespostaPadraoMSG';
+import type {respostaPadraoMsg} from '../../types/respostaPadraoMsg';
 import type {cadRequisicaoPrestador} from '../../types/cadRequisicaoPrestador';
 import type {cadRespostaPrestador} from '../../types/cadRespostaPrestador';
 import {prestadorModels} from '../../models/prestadorModels';
