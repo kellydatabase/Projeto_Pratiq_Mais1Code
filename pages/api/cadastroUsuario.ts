@@ -1,6 +1,7 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import type {RespostaPadraoMsg} from '../../types/RespostaPadraoMSG';
-import type {CadastroRequisicao} from '../../types/CadastroRequisicao';
+import type {respostaPadraoMsg} from '../../types/RespostaPadraoMSG';
+import type {cadRequisicaoUsuario} from '../../types/cadRequisicaoUsuario';
+import type {cadRespostaUsuario} from '../../types/cadRespostaUsuario';
 import {UsuarioModel} from '../../models/UsuarioModels';
 import{conectarMongoDB} from '../../middlewares/conectaMongodb';
 
@@ -8,10 +9,10 @@ import md5 from 'md5';
 import usuario from './usuario';
 
 const endpointCadastro = 
-    async(req : NextApiRequest, res: NextApiResponse <RespostaPadraoMsg>) =>{
+    async(req : NextApiRequest, res: NextApiResponse <respostaPadraoMsg>) =>{
 
         if(req.method === 'POST'){
-            const usuario = req.body as CadastroRequisicao;
+            const usuario = req.body as cadRequisicaoUsuario;
             
             if(!usuario.nome || usuario.nome.length < 2){
                 return res.status(400).json({erro:'Nome invalido'});
@@ -62,12 +63,12 @@ const endpointCadastro =
                }
                
                //validar tipo de formato de data
-               if (!usuario.data_nasc || usuario.data_nasc ){
-                return res.status(400).json({erro: 'data de nascimento invalido'});
-               }
+              // if (!usuario.data_nasc || usuario.data_nasc ){
+               //return res.status(400).json({erro: 'data de nascimento invalido'});
+               //}
 
                if (!usuario.celular || usuario.celular === 11 ){
-                return res.status(400).json({erro: 'celular invalido'});
+               return res.status(400).json({erro: 'celular invalido'});
                }
         
 // salvar no banco de dados
@@ -89,7 +90,7 @@ const usuarioASerSalvo ={
     cidade : usuario.cidade,
     estado : usuario.estado,
     cpf : usuario.cpf,
-    data_nasc: usuario.data_nasc,
+    //data_nasc: usuario.data_nasc,
     celular: usuario.celular
    
 }

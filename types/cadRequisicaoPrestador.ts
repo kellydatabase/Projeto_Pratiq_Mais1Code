@@ -1,8 +1,8 @@
-export type CadastroRequisicao = {
+export type cadRequisicaoPrestador = {
     nome: string,
     email: string,
     senha: string
-    //avatar: String,
+    avatar: String,
     cep: Number,
     endereco: String,
     num_endereco: String,
@@ -12,7 +12,7 @@ export type CadastroRequisicao = {
     bairro: String,
     cidade: String,
     estado: String,
-    cpf: Number,
-    data_nasc: String,
-    celular: Number
+    cnpj: Number,
+    //data_nasc: String,
+    telefone: Number
 };

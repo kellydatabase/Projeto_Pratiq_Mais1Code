@@ -1,6 +1,6 @@
 import mongoose, {Schema}from "mongoose";
 
-const UsuarioSchema = new Schema({
+const PrestadorSchema = new Schema({
     nome: {type: String, required : true},
     email: {type : String, required : true},
     senha: {type : String, required : true},
@@ -14,10 +14,10 @@ const UsuarioSchema = new Schema({
     bairro: {type : String, required: true},
     cidade: {type : String, required: true},
     estado: {type : String, required: true},
-    cpf: {type : Number, required : true},
+    cnpj: {type : Number, required : true},
     //data_nasc: {type : String, required : true},
-    celular: {type : Number, required : true}
+    telefone: {type : Number, required : true}
 });
 
-export const UsuarioModel = (mongoose.models.usuarios ||
-    mongoose.model('usuarios', UsuarioSchema));
+export const prestadorModels = (mongoose.models.prestadores ||
+    mongoose.model('prestadores', PrestadorSchema));

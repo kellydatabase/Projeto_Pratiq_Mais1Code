@@ -1,14 +1,15 @@
 import type {NextApiRequest, NextApiResponse} from "next";
 import {conectarMongoDB} from '../../middlewares/conectaMongodb';
-import type {RespostaPadraoMsg} from '../../types/RespostaPadraoMSG';
-import type {LoginResposta} from '../../types/LoginResposta';
+import type {respostaPadraoMsg} from '../../types/RespostaPadraoMSG';
+import type {loginResposta} from '../../types/loginResposta';
 import md5 from "md5";
 import { UsuarioModel } from "@/models/UsuarioModels";
 import jwt from 'jsonwebtoken';
+import { prestadorModels } from "@/models/prestadorModels";
 
 const endpointLogin = async (
     req : NextApiRequest,
-    res : NextApiResponse<RespostaPadraoMsg | LoginResposta>
+    res : NextApiResponse<respostaPadraoMsg | loginResposta>
 ) => {
 
     const {MINHA_CHAVE_JWT} = process.env;
@@ -28,8 +29,23 @@ const endpointLogin = async (
             return res.status(200).json({
                 nome : usuarioEncontrado.nome,
                 email : usuarioEncontrado.email,
-                token});
+                token               
+            });
         }
+
+        const prestadoresEncontrados = await prestadorModels.find({email : login, senha : md5(senha)});
+        if(prestadoresEncontrados && prestadoresEncontrados.length > 0){
+            const prestadorEncontrado = prestadoresEncontrados[0];
+
+            const token = jwt.sign({_id : prestadorEncontrado._id}, MINHA_CHAVE_JWT);
+
+            return res.status(200).json({
+                nome : prestadorEncontrado.nome,
+                email : prestadorEncontrado.email,
+                token               
+            });
+        }
+        
         return res.status(405).json({ erro : 'Método informado não é válido'});    
     }
     return res.status(400).json({ erro : 'Usuário ou senha não encontrado'});
