@@ -8,11 +8,15 @@ import{conectarMongoDB} from '../../middlewares/conectaMongodb';
 import md5 from 'md5';
 import prestador from './prestador';
 
+import {updload, uploadImagemCosmic} from '../../services/uploadImagemCosmic';
+import nc from 'next-connect';
 
-const endpointCadastroPrestador = 
-    async(req : NextApiRequest, res: NextApiResponse <respostaPadraoMsg>) =>{
 
-        if(req.method === 'POST'){
+const handler = nc()
+    .use(updload.single('file'))
+    .post(async(req : NextApiRequest, res: NextApiResponse <respostaPadraoMsg>) =>{
+        try {
+            console.log('cadastro endpoint', req.body);
             const prestador = req.body as cadRequisicaoPrestador;
             
             if(!prestador.nome || prestador.nome.length < 2){
@@ -79,10 +83,14 @@ if (prestadorComMesmoEmail && prestadorComMesmoEmail.length >0){
     return res.status(400).json({erro: 'email ja cadastrado'});
 }
 
+//enviar imagem do multer para o cosmic
+const image= await uploadImagemCosmic(req);
+
 const prestadorASerSalvo ={
     nome : prestador.nome,
     email : prestador.email,
     senha : md5(prestador.senha),
+    avatar: image?.media?.url,
     cep : prestador.cep,
     endereco : prestador.endereco,
     num_endereco : prestador.num_endereco,
@@ -98,9 +106,15 @@ const prestadorASerSalvo ={
 
 await prestadorModels.create(prestadorASerSalvo);
 return res.status(200).json({msg : 'Prestador criado com sucesso'})
-        return res.status(200).json({msg:'Dados corretos'})
-    }
-        return res.status(405).json({erro : 'Metodo Informado não é válido'});
+}catch (e) {
+    console.log(e)
+    return res.status(500).json({erro : 'erro ao cadastrar prestador'});
+}});
+export const config = {
+    api : {
+    bodyParser : false
+}
 
 }
-export default conectarMongoDB(endpointCadastroPrestador);
+
+export default conectarMongoDB(handler);
