@@ -10,7 +10,7 @@ const UsuarioSchema = new Schema({
     num_endereco: {type : String, required: true},
     
     //validar como deixar complemento opcional
-    //complemento_endereco: {type : String, required: false},
+    //complemento_endereco: {type : String},
     bairro: {type : String, required: true},
     cidade: {type : String, required: true},
     estado: {type : String, required: true},

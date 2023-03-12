@@ -41,14 +41,14 @@ const handler = nc()
                     return res.status(400).json({erro: 'endereço invalido'});
                 }
 
-                if (!usuario.num_endereco || usuario.num_endereco.length > 2){
+                if (!usuario.num_endereco || usuario.num_endereco.length > 10){
                     return res.status(400).json({erro: 'Número invalido'});
                 }
 
                // validar complemento opcional
-               //if (!usuario.complemento_endereco || usuario.complemento_endereco.length < 2 ){
+              // if (!usuario.complemento_endereco || usuario.complemento_endereco.length < 2 ){
                 //return res.status(400).json({erro: 'complemento invalido'});
-               //}
+              // }
 
                if (!usuario.bairro || usuario.bairro.length < 2 ){
                 return res.status(400).json({erro: 'bairro invalido'});
