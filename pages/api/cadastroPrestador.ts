@@ -8,12 +8,12 @@ import{conectarMongoDB} from '../../middlewares/conectaMongodb';
 import md5 from 'md5';
 import prestador from './prestador';
 
-import {updload, uploadImagemCosmic} from '../../services/uploadImagemCosmic';
+import {upload, uploadImagemCosmic} from '../../services/uploadImagemCosmic';
 import nc from 'next-connect';
 
 
 const handler = nc()
-    .use(updload.single('file'))
+    .use(upload.single('file'))
     .post(async(req : NextApiRequest, res: NextApiResponse <respostaPadraoMsg>) =>{
         try {
             console.log('cadastro endpoint', req.body);
@@ -80,7 +80,7 @@ const handler = nc()
 //validacao se ja existe prestador com o mesmo email
 const prestadorComMesmoEmail = await prestadorModels.find({email: prestador.email});
 if (prestadorComMesmoEmail && prestadorComMesmoEmail.length >0){
-    return res.status(400).json({erro: 'email ja cadastrado'});
+    return res.status(400).json({erro: 'E-mail já cadastrado'});
 }
 
 //enviar imagem do multer para o cosmic

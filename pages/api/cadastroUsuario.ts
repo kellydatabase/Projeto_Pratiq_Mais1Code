@@ -9,11 +9,11 @@ import{conectarMongoDB} from '../../middlewares/conectaMongodb';
 import md5 from 'md5';
 import usuario from './usuario';
 
-import {updload, uploadImagemCosmic} from '../../services/uploadImagemCosmic';
+import {upload, uploadImagemCosmic} from '../../services/uploadImagemCosmic';
 import nc from 'next-connect';
 
 const handler = nc()
-    .use(updload.single('file'))
+    .use(upload.single('file'))
     .post(async(req : NextApiRequest, res: NextApiResponse <respostaPadraoMsg>) =>{
         try {
             console.log('cadastro endpoint', req.body);
